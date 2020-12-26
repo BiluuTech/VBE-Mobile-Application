@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    >
+
+    <TextView
+        android:id="@+id/welcome_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/montserrat_alternates"
+        android:gravity="center_horizontal"
+        android:text="Welcome Admin"
+        android:textColor="@color/colorBlue"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/logo_IV"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+    <TextView
+        android:id="@+id/store_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VBE STORE"
+        android:fontFamily="@font/montserrat_alternates"
+        android:textColor="@color/colorDarkBlue"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_below="@+id/logo_IV"
+        />
+
+</RelativeLayout>
