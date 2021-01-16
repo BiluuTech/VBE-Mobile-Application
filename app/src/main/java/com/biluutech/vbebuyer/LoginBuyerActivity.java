@@ -1,32 +1,85 @@
 package com.biluutech.vbebuyer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class LoginBuyerActivity extends AppCompatActivity {
 
-    private TextView signupTV;
+    //private TextView signupTV;
+    private EditText loginEmailInputET, loginPasswordInputET;
+    private String email, password;
+    private FirebaseAuth auth;
+    private LinearLayout buyerLoginLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_buyer);
+        auth = FirebaseAuth.getInstance();
+        buyerLoginLayout = findViewById(R.id.buyerLoginLayout);
+        //signupTV = (TextView) findViewById(R.id.signup_TV);
+        loginEmailInputET = findViewById(R.id.login_email_input_ET);
+        loginPasswordInputET = findViewById(R.id.login_password_input_ET);
 
-        signupTV = (TextView) findViewById(R.id.signup_TV);
+        email = loginEmailInputET.getText().toString();
+        password = loginPasswordInputET.getText().toString();
 
-        signupTV.setOnClickListener(new View.OnClickListener() {
+    }
+
+    public void signUpTxtClick(View view) {
+        startActivity(new Intent(LoginBuyerActivity.this, SignupBuyerActivity.class));
+        finish();
+    }
+
+    public void loginBtnClick(View view) {
+        CheckValidations();
+    }
+
+    private void CheckValidations() {
+        if (!TextUtils.isEmpty(loginEmailInputET.getText().toString())) {
+            if (!TextUtils.isEmpty(loginPasswordInputET.getText().toString()) && loginPasswordInputET.getText().toString().length() >= 6) {
+                LoginAccount();
+            } else {
+                loginPasswordInputET.setError("Please fill this field at least 6 character");
+            }
+        } else {
+            loginEmailInputET.setError("Please fill this field");
+        }
+    }
+
+    private void LoginAccount() {
+        auth.signInWithEmailAndPassword(loginEmailInputET.getText().toString(), loginPasswordInputET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(LoginBuyerActivity.this,SignupBuyerActivity.class));
-                finish();
-
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(LoginBuyerActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Snackbar snackbar = Snackbar.make(buyerLoginLayout, e.getMessage(), BaseTransientBottomBar.LENGTH_LONG);
+                snackbar.show();
             }
         });
-
     }
 }
