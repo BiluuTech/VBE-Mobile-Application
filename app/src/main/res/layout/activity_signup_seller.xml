@@ -9,6 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/signUpLayout"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -105,6 +106,7 @@
                 android:layout_marginRight="16dp"
                 android:background="@drawable/button_design1"
                 android:fontFamily="@font/montserrat_alternates"
+                android:onClick="signUpBtnClick"
                 android:text="signup"
                 android:textColor="@color/colorWhite"
 
@@ -134,6 +136,7 @@
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/montserrat_alternates"
                     android:text="Login"
+                    android:onClick="loginTxtClick"
                     android:textColor="@color/colorDarkBlue"
                     android:textStyle="bold" />
 
