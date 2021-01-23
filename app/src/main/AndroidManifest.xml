@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.designer.vbeseller.LoginSellerActivity"></activity>
-        <activity android:name="com.designer.vbeseller.SignupSellerActivity" />
-        <activity android:name="com.designer.vbeseller.SplashActivity">
+        <activity android:name=".UpdateProfileActivity"></activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".LoginSellerActivity" />
+        <activity android:name=".SignupSellerActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

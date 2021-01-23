@@ -27,7 +27,7 @@ public class LoginSellerActivity extends AppCompatActivity {
     private EditText loginEmailInputET, loginPasswordInputET;
     private String email, password;
     private FirebaseAuth auth;
-    private LinearLayout sellerLoginLayout;
+    private LinearLayout buyerLoginLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class LoginSellerActivity extends AppCompatActivity {
 
         //signupTV = (TextView) findViewById(R.id.signup_TV);
         auth = FirebaseAuth.getInstance();
-        sellerLoginLayout = findViewById(R.id.sellerLoginLayout);
+        buyerLoginLayout = findViewById(R.id.sellerLoginLayout);
         loginEmailInputET = findViewById(R.id.login_email_input_ET);
         loginPasswordInputET = findViewById(R.id.login_password_input_ET);
 
@@ -67,18 +67,20 @@ public class LoginSellerActivity extends AppCompatActivity {
     }
 
     private void LoginAccount() {
-        auth.signInWithEmailAndPassword(loginEmailInputET.getText().toString(), loginPasswordInputET.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(loginEmailInputET.getText().toString(), loginPasswordInputET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(LoginSellerActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(LoginSellerActivity.this,HomeActivity.class));
+                    finish();
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Snackbar snackbar = Snackbar.make(sellerLoginLayout, e.getMessage(), BaseTransientBottomBar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(buyerLoginLayout, e.getMessage(), BaseTransientBottomBar.LENGTH_LONG);
                 snackbar.show();
             }
         });
