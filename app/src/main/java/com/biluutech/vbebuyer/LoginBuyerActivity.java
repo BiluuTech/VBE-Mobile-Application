@@ -24,7 +24,6 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class LoginBuyerActivity extends AppCompatActivity {
 
-    //private TextView signupTV;
     private EditText loginEmailInputET, loginPasswordInputET;
     private String email, password;
     private FirebaseAuth auth;
@@ -36,7 +35,6 @@ public class LoginBuyerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_buyer);
         auth = FirebaseAuth.getInstance();
         buyerLoginLayout = findViewById(R.id.buyerLoginLayout);
-        //signupTV = (TextView) findViewById(R.id.signup_TV);
         loginEmailInputET = findViewById(R.id.login_email_input_ET);
         loginPasswordInputET = findViewById(R.id.login_password_input_ET);
 
@@ -71,7 +69,8 @@ public class LoginBuyerActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(LoginBuyerActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginBuyerActivity.this,HomeActivity.class));
+                    finish();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

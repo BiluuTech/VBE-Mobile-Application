@@ -18,17 +18,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 import static com.google.android.material.snackbar.Snackbar.*;
 
 public class SignupBuyerActivity extends AppCompatActivity {
 
-    // TextView loginTV;
     private LinearLayout signUpLayout;
     private EditText signUpNameInputET, signUpEmailInputET, signUpPasswordInputET;
     private FirebaseAuth auth;
     private String name, email, password;
     private ProgressDialog progressDialog;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +40,9 @@ public class SignupBuyerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup_buyer);
 
         auth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         signUpLayout = findViewById(R.id.signUpLayout);
         progressDialog = new ProgressDialog(this);
-        //loginTV =  findViewById(R.id.login_TV);
         signUpNameInputET =  findViewById(R.id.signup_name_input_ET);
         signUpEmailInputET =  findViewById(R.id.signup_email_input_ET);
         signUpPasswordInputET =  findViewById(R.id.signup_password_input_ET);
@@ -89,6 +93,7 @@ public class SignupBuyerActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    StoreDataIntoDatabase();
                     progressDialog.dismiss();
                     startActivity(new Intent(SignupBuyerActivity.this,LoginBuyerActivity.class));
                     finish();
@@ -102,5 +107,15 @@ public class SignupBuyerActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+    }
+
+    private void StoreDataIntoDatabase() {
+
+        HashMap<String, Object> dataMap = new HashMap<>();
+        dataMap.put("name", signUpNameInputET.getText().toString());
+        dataMap.put("email", signUpEmailInputET.getText().toString());
+        dataMap.put("password", signUpPasswordInputET.getText().toString());
+        databaseReference.child("Buyers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(dataMap);
+
     }
 }
