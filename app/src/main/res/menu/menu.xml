@@ -5,15 +5,19 @@
         android:icon="@drawable/home"
         android:title="Home" />
     <item
-        android:id="@+id/setting"
-        android:icon="@drawable/home"
-        android:title="Settings" />
+        android:id="@+id/updateProfile"
+        android:icon="@drawable/update"
+        android:title="Update Profile" />
     <item
-        android:id="@+id/aboutus"
-        android:icon="@drawable/home"
+        android:id="@+id/aboutUs"
+        android:icon="@drawable/aboutus"
         android:title="About Us" />
     <item
+        android:id="@+id/help"
+        android:icon="@drawable/help"
+        android:title="Help" />
+    <item
         android:id="@+id/logout"
-        android:icon="@drawable/home"
+        android:icon="@drawable/logout"
         android:title="Logout" />
 </menu>
