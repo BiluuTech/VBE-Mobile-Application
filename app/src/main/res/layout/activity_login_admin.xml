@@ -89,6 +89,7 @@
           android:background="@drawable/button_design1"
           android:fontFamily="@font/montserrat_alternates"
           android:text="LOGIN"
+          android:onClick="adminloginBtnClick"
           android:textColor="@color/colorWhite"
           android:layout_below="@+id/login_password_input_layout"
 
