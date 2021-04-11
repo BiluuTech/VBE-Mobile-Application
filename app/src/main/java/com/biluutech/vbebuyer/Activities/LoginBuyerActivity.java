@@ -1,4 +1,4 @@
-package com.biluutech.vbebuyer;
+package com.biluutech.vbebuyer.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.biluutech.vbebuyer.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -19,8 +18,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import static android.widget.Toast.LENGTH_LONG;
 
 public class LoginBuyerActivity extends AppCompatActivity {
 
@@ -54,7 +51,7 @@ public class LoginBuyerActivity extends AppCompatActivity {
 
     private void CheckValidations() {
         if (!TextUtils.isEmpty(loginEmailInputET.getText().toString())) {
-            if (!TextUtils.isEmpty(loginPasswordInputET.getText().toString()) && loginPasswordInputET.getText().toString().length() >= 6) {
+            if (!TextUtils.isEmpty(loginPasswordInputET.getText().toString().trim()) && loginPasswordInputET.getText().toString().trim().length() >= 6) {
                 LoginAccount();
             } else {
                 loginPasswordInputET.setError("Please fill this field at least 6 character");
@@ -80,5 +77,14 @@ public class LoginBuyerActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            startActivity(new Intent(LoginBuyerActivity.this,HomeActivity.class));
+            finish();
+        }
     }
 }

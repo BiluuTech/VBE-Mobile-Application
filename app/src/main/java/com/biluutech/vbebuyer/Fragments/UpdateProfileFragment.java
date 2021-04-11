@@ -1,4 +1,4 @@
-package com.biluutech.vbebuyer;
+package com.biluutech.vbebuyer.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.biluutech.vbebuyer.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,7 +40,6 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
-
 
 public class UpdateProfileFragment extends Fragment {
 
@@ -199,8 +199,8 @@ public class UpdateProfileFragment extends Fragment {
 
     private void SaveProfileInfoToDatabase() {
         HashMap<String, Object> datamap = new HashMap<>();
-        datamap.put("name", etBuyerName.getText().toString());
-        datamap.put("number", etBuyerNumber.getText().toString());
+        datamap.put("name", etBuyerName.getText().toString().trim());
+        datamap.put("number", etBuyerNumber.getText().toString().trim());
         datamap.put("imageUrl", downloadImageUrl);
 
         databaseReference.child("Buyers").child(firebaseAuth.getCurrentUser().getUid()).updateChildren(datamap)

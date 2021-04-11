@@ -1,4 +1,4 @@
-package com.biluutech.vbebuyer;
+package com.biluutech.vbebuyer.Fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.biluutech.vbebuyer.R;
 
 public class HelpFragment extends Fragment {
 

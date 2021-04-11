@@ -1,6 +1,5 @@
-package com.biluutech.vbebuyer;
+package com.biluutech.vbebuyer.Activities;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.biluutech.vbebuyer.R;
 
 public class SplashBuyerActivity extends AppCompatActivity {
 

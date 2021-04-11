@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.biluutech.vbebuyer">
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -9,10 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".SignupBuyerActivity" />
-        <activity android:name=".LoginBuyerActivity" />
-        <activity android:name=".SplashBuyerActivity">
+        <activity android:name=".Activities.CheckoutActivity"></activity>
+        <activity android:name=".Activities.CartActivity" />
+        <activity android:name=".Activities.ThanksActivity" />
+        <activity android:name=".Activities.CategoryProductActivity" />
+        <activity android:name=".Activities.ProductDescriptionActivity" />
+        <activity android:name=".Activities.HomeActivity" />
+        <activity android:name=".Activities.SignupBuyerActivity" />
+        <activity android:name=".Activities.LoginBuyerActivity" />
+        <activity android:name=".Activities.SplashBuyerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.biluutech.vbebuyer;
+package com.biluutech.vbebuyer.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +10,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.biluutech.vbebuyer.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -28,9 +28,9 @@ import static com.google.android.material.snackbar.Snackbar.*;
 public class SignupBuyerActivity extends AppCompatActivity {
 
     private LinearLayout signUpLayout;
-    private EditText signUpNameInputET, signUpEmailInputET, signUpPasswordInputET;
+    private EditText signUpNameInputET, signUpEmailInputET, signUpPasswordInputET, signUpAddressInputET;
     private FirebaseAuth auth;
-    private String name, email, password;
+    private String name, email, password, address;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
 
@@ -43,19 +43,21 @@ public class SignupBuyerActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         signUpLayout = findViewById(R.id.signUpLayout);
         progressDialog = new ProgressDialog(this);
-        signUpNameInputET =  findViewById(R.id.signup_name_input_ET);
-        signUpEmailInputET =  findViewById(R.id.signup_email_input_ET);
-        signUpPasswordInputET =  findViewById(R.id.signup_password_input_ET);
+        signUpNameInputET = findViewById(R.id.signup_name_input_ET);
+        signUpEmailInputET = findViewById(R.id.signup_email_input_ET);
+        signUpPasswordInputET = findViewById(R.id.signup_password_input_ET);
+        signUpAddressInputET = findViewById(R.id.signup_address_input_ET);
 
-        name = signUpNameInputET.getText().toString();
-        email = signUpEmailInputET.getText().toString();
-        password = signUpPasswordInputET.getText().toString();
+        name = signUpNameInputET.getText().toString().trim();
+        email = signUpEmailInputET.getText().toString().trim();
+        password = signUpPasswordInputET.getText().toString().trim();
+        address = signUpAddressInputET.getText().toString().trim();
 
 
     }
 
     public void loginTxtClick(View view) {
-        startActivity(new Intent(SignupBuyerActivity.this,LoginBuyerActivity.class));
+        startActivity(new Intent(SignupBuyerActivity.this, LoginBuyerActivity.class));
         finish();
     }
 
@@ -64,20 +66,21 @@ public class SignupBuyerActivity extends AppCompatActivity {
     }
 
     private void CheckValidations() {
-        if (!TextUtils.isEmpty(signUpNameInputET.getText().toString())){
-            if (!TextUtils.isEmpty(signUpEmailInputET.getText().toString())){
-                if (!TextUtils.isEmpty(signUpPasswordInputET.getText().toString())){
-                    CreateAccount();
+        if (!TextUtils.isEmpty(signUpNameInputET.getText().toString())) {
+            if (!TextUtils.isEmpty(signUpAddressInputET.getText().toString())) {
+                if (!TextUtils.isEmpty(signUpEmailInputET.getText().toString())) {
+                    if (!TextUtils.isEmpty(signUpPasswordInputET.getText().toString())) {
+                        CreateAccount();
+                    } else {
+                        signUpPasswordInputET.setError("Please fill this field");
+                    }
+                } else {
+                    signUpEmailInputET.setError("Please fill this field");
                 }
-                else{
-                    signUpPasswordInputET.setError("Please fill this field");
-                }
+            } else {
+                signUpAddressInputET.setError("Please fill this field");
             }
-            else{
-                signUpEmailInputET.setError("Please fill this field");
-            }
-        }
-        else{
+        } else {
             signUpNameInputET.setError("Please fill this field");
         }
     }
@@ -89,13 +92,13 @@ public class SignupBuyerActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        auth.createUserWithEmailAndPassword(signUpEmailInputET.getText().toString(),signUpPasswordInputET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(signUpEmailInputET.getText().toString(), signUpPasswordInputET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     StoreDataIntoDatabase();
                     progressDialog.dismiss();
-                    startActivity(new Intent(SignupBuyerActivity.this,LoginBuyerActivity.class));
+                    startActivity(new Intent(SignupBuyerActivity.this, LoginBuyerActivity.class));
                     finish();
                 }
             }
@@ -112,9 +115,12 @@ public class SignupBuyerActivity extends AppCompatActivity {
     private void StoreDataIntoDatabase() {
 
         HashMap<String, Object> dataMap = new HashMap<>();
-        dataMap.put("name", signUpNameInputET.getText().toString());
-        dataMap.put("email", signUpEmailInputET.getText().toString());
-        dataMap.put("password", signUpPasswordInputET.getText().toString());
+        dataMap.put("name", signUpNameInputET.getText().toString().trim());
+        dataMap.put("address", signUpAddressInputET.getText().toString().trim());
+        dataMap.put("email", signUpEmailInputET.getText().toString().trim());
+        dataMap.put("password", signUpPasswordInputET.getText().toString().trim());
+        dataMap.put("bid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        dataMap.put("status", "true");
         databaseReference.child("Buyers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(dataMap);
 
     }

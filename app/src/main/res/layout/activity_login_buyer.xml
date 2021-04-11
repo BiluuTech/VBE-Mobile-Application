@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/buyerLoginLayout"
         android:orientation="vertical"
-        tools:context=".LoginBuyerActivity">
+        tools:context=".Activities.LoginBuyerActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
